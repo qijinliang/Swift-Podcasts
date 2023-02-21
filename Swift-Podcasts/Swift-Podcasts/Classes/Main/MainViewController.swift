@@ -11,22 +11,35 @@ class MainViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
 
         UINavigationBar.appearance().prefersLargeTitles = true
         
         tabBar.tintColor = .purple
+        
+        setupViewControllers()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func setupViewControllers() {
+        
+        let layout = UICollectionViewFlowLayout()
+        
+        let favortesController = UIViewController()
+        viewControllers = [
+            generateNavigationController(for: PodcastsSearchController(), title: "搜索", image: #imageLiteral(resourceName: "search")),
+            generateNavigationController(for: PodcastsSearchController(), title: "收藏", image: #imageLiteral(resourceName: "heart")),
+            generateNavigationController(for: PodcastsSearchController(), title: "下载", image: #imageLiteral(resourceName: "downloads"))
+        ]
     }
-    */
+    
+    
+    fileprivate func generateNavigationController(for rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
+        let navController = UINavigationController(rootViewController: rootViewController)
+        rootViewController.navigationItem.title = title
+        rootViewController.tabBarItem.title = title
+        rootViewController.tabBarItem.image = image
+        
+        return navController
+    }
 
 }
