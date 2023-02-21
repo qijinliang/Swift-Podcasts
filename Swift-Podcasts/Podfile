@@ -6,5 +6,8 @@ target 'Swift-Podcasts' do
   use_frameworks!
 
   # Pods for Swift-Podcasts
+  pod 'Alamofire'
+  pod 'SDWebImage'
+  pod 'FeedKit'
 
 end
