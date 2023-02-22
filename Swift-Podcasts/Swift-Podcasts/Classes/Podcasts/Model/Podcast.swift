@@ -2,7 +2,7 @@
 //  Podcast.swift
 //  Swift-Podcasts
 //
-//  Created by Cheney on 2023/2/21.
+//  Created by 金亮 on 2023/2/21.
 //
 
 import Foundation
