@@ -23,12 +23,11 @@ class MainViewController: UITabBarController {
     func setupViewControllers() {
         
         let layout = UICollectionViewFlowLayout()
-        
-        let favortesController = UIViewController()
+        let favoritesController = FavoritesController(collectionViewLayout: layout)
         viewControllers = [
             generateNavigationController(for: PodcastsSearchController(), title: "搜索", image: #imageLiteral(resourceName: "search")),
-            generateNavigationController(for: PodcastsSearchController(), title: "收藏", image: #imageLiteral(resourceName: "heart")),
-            generateNavigationController(for: PodcastsSearchController(), title: "下载", image: #imageLiteral(resourceName: "downloads"))
+            generateNavigationController(for: favoritesController, title: "收藏", image: #imageLiteral(resourceName: "heart")),
+            generateNavigationController(for: DownloadsController(), title: "下载", image: #imageLiteral(resourceName: "downloads"))
         ]
     }
     

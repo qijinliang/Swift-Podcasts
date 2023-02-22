@@ -1,5 +1,5 @@
 //
-//  PodcastsSearchController.swift
+//  EpisodesController.swift
 //  Swift-Podcasts
 //
 //  Created by Cheney on 2023/2/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PodcastsSearchController: UITableViewController {
+class EpisodesController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
