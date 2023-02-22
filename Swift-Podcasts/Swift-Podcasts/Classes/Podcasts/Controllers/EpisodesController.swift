@@ -8,6 +8,18 @@
 import UIKit
 
 class EpisodesController: UITableViewController {
+    
+    var podcast: Podcast? {
+        didSet {
+            navigationItem.title = podcast?.trackName
+            
+            fetchEpisodes()
+        }
+    }
+    
+    fileprivate func fetchEpisodes() {
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
