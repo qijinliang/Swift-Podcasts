@@ -36,10 +36,10 @@ class EpisodesController: UITableViewController {
     fileprivate let cellID = "cellId"
     
     var episodes = [Episode]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupNavigationBarButtons()
         setupTableView()
     }
@@ -59,7 +59,7 @@ class EpisodesController: UITableViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "heart"), style: .plain, target: nil, action: nil)
         } else {
             navigationItem.rightBarButtonItems = [
-                UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleSaveFavorite)),
+                UIBarButtonItem(title: "收藏", style: .plain, target: self, action: #selector(handleSaveFavorite)),
             ]
         }
         
@@ -81,15 +81,36 @@ class EpisodesController: UITableViewController {
     }
     
     fileprivate func showBadgeHighlight() {
-        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "New"
+        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "新"
     }
-
-
+    
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .destructive, title: "下载") {  (contextualAction, view, boolValue) in
+            let episode = self.episodes[indexPath.row]
+            UserDefaults.standard.downloadEpisode(episode: episode)
+            APIService.shared.downloadEpisode(episode: episode)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        
+        return swipeActions
+    }
+    
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episode = self.episodes[indexPath.row]
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let mainTabBarController = keyWindow?.rootViewController as? MainViewController
+        mainTabBarController?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
+    }
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return episodes.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EpisodeCell
         let episode = episodes[indexPath.row]
@@ -97,11 +118,11 @@ class EpisodesController: UITableViewController {
         return cell
     }
     
-
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 134
     }
-
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         activityIndicatorView.color = .darkGray
@@ -112,5 +133,5 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return episodes.isEmpty ? 200 : 0
     }
-
+    
 }

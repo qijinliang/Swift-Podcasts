@@ -10,7 +10,9 @@ import UIKit
 extension UIApplication {
     static func mainTabBarController() -> MainViewController? {
         
-        return shared.keyWindow?.rootViewController as? MainViewController
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let mainController = keyWindow?.rootViewController as? MainViewController
+        return mainController
     }
 }
 
